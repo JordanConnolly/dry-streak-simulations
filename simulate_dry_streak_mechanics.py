@@ -1,22 +1,30 @@
 import random
 
+# This function simulates a "dry streak" under the old drop rate method.
 def simulate_dry_streak(drop_rate, num_trials, num_simulations):
     num_dry = 0
     for _ in range(num_simulations):
+        # For each simulation, make a number of trials.
+        # If all trials are dry (random number > 1 / drop rate), increment the counter.
         if all(random.random() > 1 / drop_rate for _ in range(num_trials)):
             num_dry += 1
     return num_dry / num_simulations
 
+
+# This function simulates a "dry streak" under the new drop rate method, with an increment counter.
 def simulate_incremental_dry_streak(drop_rate, num_trials, num_simulations, increment):
     num_dry = 0
     for _ in range(num_simulations):
         counter = 0
         for _ in range(num_trials):
+            # For each simulation, make a number of trials.
+            # If a trial is successful (random number < 1 / drop rate), increment the counter.
             if random.random() < 1 / drop_rate:
                 counter += 1
         if counter < increment:
             num_dry += 1
     return num_dry / num_simulations
+
 
 # Usage:
 drop_rate = 1087.98

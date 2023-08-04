@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import os
 
 # This function simulates a "dry streak" under the old drop rate method.
 def simulate_dry_streak(drop_rate, num_trials, num_simulations):
@@ -56,8 +56,12 @@ for num_trials in range(1, set_num_rolls, 100):
 # Convert the results to a DataFrame:
 df = pd.DataFrame(results)
 
-# Write the DataFrame to a CSV file:
-df.to_csv(f"simulation_results_{set_num_rolls}_rolls.csv", index=False)
+# Check if the results directory exists, if not, create it:
+if not os.path.isdir('results'):
+    os.makedirs('results')
+
+# Write the DataFrame to a CSV file in the /results directory:
+df.to_csv(f"results/simulation_results_{set_num_rolls}_rolls.csv", index=False)
 
 # Plot the results:
 plt.figure(figsize=(10, 6))
